@@ -5,6 +5,7 @@ def dec (x):# recebi binario
         if x[-(i+1)] != '0':#inicia a leitura de tras para frente
             valor = valor + pow(2,i)
     return valor
+
 def hex (x): #recebe binario
     tabela_hex = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f']
     tam = len(x)
@@ -19,9 +20,15 @@ def hex (x): #recebe binario
     for i in range(tam+1):
         blocos_bin.append(entrada_interira%10000)
         blocos_bin[i] = dec(str(blocos_bin[i]))
-        valor = valor + tabela_hex[blocos_bin[i]]
+       
+        if blocos_bin[i] == 0 and i==(tam) :
+            pass
+        else:    
+            valor = valor + tabela_hex[blocos_bin[i]]
         entrada_interira = entrada_interira // 10000
-    valor = valor[::-1]
+
+    valor = valor[::-1]  
+      
     return valor
 
 def bin(x):# recebi decimal
@@ -45,40 +52,42 @@ def hex_bin (x):# recebi hexadecimal
     "c":"1100","d":"1101","e":"1110","f":"1111"
     }
     valor=""
-    for i in x:
-        if i in tabale_bin:
-            valor = valor + tabale_bin[i]
-
+    for i in range(len(x)):
+        if i == 0:
+            valor = tabale_bin[x[i]]
+            valor = int (valor)
+            valor = str(valor)
+        elif x[i] in tabale_bin:
+            valor = valor + tabale_bin[x[i]]
     return valor
 while True:
     try:
-        repeticao = int(input("informe quantos numeros você deseja converter:"))
+        repeticao = int(input())
         for i in range(repeticao) :
             caso = input().strip().split(" ")
             if caso[1] == 'bin':
                 valor = caso[0]
-                print(f"Caso {i+1}")
+                print(f"Case {i+1}:")
                 decimal = dec(valor)
                 print(f"{decimal} dec")
                 hexa = hex(valor)
-                print(f"{hexa} hex")
+                print(f"{hexa} hex\n")
              
             elif caso[1] == 'dec':
                 valor = caso[0]
-                print(f"Caso {i+1}")
+                print(f"Case {i+1}:")
                 binario = bin(valor)
                 hexa = hex(binario)
                 print(f"{hexa} hex")
-                print(f"{binario} bin")
+                print(f"{binario} bin\n")
                 
             elif caso[1] == 'hex':
                 valor = caso[0]
-                print(f"Caso {i+1}")
+                print(f"Case {i+1}:")
                 binario = hex_bin(valor)
                 decimal = dec(binario)
                 print(f"{decimal} dec")
-                print(f"{binario} bin")
-            else:
-                print('Erro de formatação')
+                print(f"{binario} bin\n")
+           
     except EOFError:
         break
